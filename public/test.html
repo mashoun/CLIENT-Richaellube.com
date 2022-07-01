@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>test gas</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=El+Messiri&display=swap');
+        .material-icons.md-18 {
+            font-size: 18px;
+        }
+
+        .material-icons.md-24 {
+            font-size: 24px;
+        }
+
+        .material-icons.md-36 {
+            font-size: 36px;
+        }
+
+        .material-icons.md-48 {
+            font-size: 48px;
+        }
+
+        .material-icons.white {
+            color: #54a6b3;
+            margin: 15px;
+        }
+
+        .tcontainer {
+            width: 100%;
+            overflow: hidden;
+            border-radius: 15px;
+        }
+
+        .ticker-wrap {
+            width: 100%;
+            padding-left: 100%;
+            background-color: #e31e25;
+        }
+
+        @keyframes ticker {
+            100% {
+                transform: translate3d(-100%, 0, 0);
+            }
+        }
+
+        .ticker-move {
+            display: inline-block;
+            white-space: nowrap;
+            padding-right: 100%;
+            animation-timing-function: linear;
+            animation: ticker 20s infinite;
+        }
+
+        .ticker-move:hover {
+            animation-play-state: paused;
+        }
+
+        .ticker-item {
+            display: inline-block;
+            padding: 2 40px;
+            font-size: 20px;
+            color: white;
+            font-family: 'El Messiri', sans-serif;
+
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+
+        <div class="tcontainer">
+            <div class="ticker-wrap">
+                <div class="ticker-move">
+                    <div class="ticker-item" v-for="n in news">  {{n.data}} </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    <script src="https://unpkg.com/vue@next"></script>
+    <script>
+        const url = "https://script.google.com/macros/s/AKfycbxD05VBPB7dccLaERZjmlPrf08Qv12ntqQSVKWs11VRWDykxxP8dd_u4RtsMCK9ZxSy2w/exec?getdata=1";
+        const app = {
+            data() {
+                return {
+                    title: 'lebancode',
+                    news: []
+                }
+            },
+            mounted() {
+                fetch(url)
+                    .then(response => response.json())
+                    .then(json => {
+                        this.news = json;
+                        //console.log('mounted')
+                        //console.log(json[0].data)
+                    })
+            }
+        }
+        Vue.createApp(app).mount('#app')
+    </script>
+
+</body>
+
+</html>
